@@ -1,0 +1,40 @@
+!!! 5
+%html
+%head
+  %title Pidgin
+  %meta{ name: 'viewport', content: 'width=device-width, initial-scale=1' }
+  = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true
+  = javascript_include_tag 'application', 'data-turbolinks-track' => true
+  = csrf_meta_tags
+
+%body
+  %nav.navbar.navbar-default
+    .container-fluid
+      .navbar-header
+        %button{ type: 'button', class: 'navbar-toggle collapsed', 'data-toggle' => 'collapse', 'data-target' => 'static-navbar', 'aria-expanded' => 'false' }
+          %span.sr-only Toggle Navigation
+          %span.icon-bar
+          %span.icon-bar
+          %span.icon-bar
+        = link_to "Pidgin", root_url, class: 'navbar-brand'
+
+      .collapse.navbar-collapse#static-navbar
+        %ul.nav.navbar-nav
+          %li= link_to "Home", root_url
+        %ul.nav.navbar-nav.navbar-right
+          - if current_user
+            %li.navbar-text Logged in as #{current_user.email}
+            %li= link_to "Sign Out", sign_out_url
+          - else
+            %li= link_to "Sign In", sign_in_url
+            %li= link_to "Sign Up", sign_up_url
+
+  - if flash[:error]
+    .alert.alert-danger= flash[:error]
+  - if flash[:alert]
+    .alert.alert-warning= flash[:alert]
+  - if flash[:notice]
+    .alert.alert-success= flash[:notice]
+
+  .container
+    = yield

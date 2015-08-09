@@ -1,0 +1,16 @@
+%h1 Log In
+
+.col-md-4
+  = form_tag sessions_path do
+    .form-group
+      = label_tag :email
+      = email_field_tag :email, params[:email], class:'form-control'
+
+    .form-group
+      = label_tag :password
+      = password_field_tag :password, nil, class: 'form-control'
+
+    .actions
+      = submit_tag 'Submit'
+
+    
