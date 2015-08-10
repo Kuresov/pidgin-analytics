@@ -4,7 +4,7 @@ class SessionsController < ApplicationController
 
   def create
     user = User.authenticate(params[:email], params[:password])
-    if user
+    if user && user.class.authenticate(params['email'], params[:password])
       session[:user_id] = user.id
       redirect_to root_url, notice: 'Logged in'
     else
