@@ -23,8 +23,12 @@
           %li= link_to "Home", root_url
         %ul.nav.navbar-nav.navbar-right
           - if current_user
-            %li.navbar-text Logged in as #{current_user.email}
-            %li= link_to "Sign Out", sign_out_url
+            %li.dropdown
+              %a{ class:'dropdown-toggle', 'data-toggle' => 'dropdown', 'role' => 'button', 'aria-haspopup' => 'true', 'aria-expanded' => 'false' }
+                #{current_user.email}
+                %span.caret
+              %ul.dropdown-menu
+                %li= link_to "Sign Out", sign_out_url
           - else
             %li= link_to "Sign In", sign_in_url
             %li= link_to "Sign Up", sign_up_url
