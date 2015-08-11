@@ -4,10 +4,11 @@ class UsersController < ApplicationController
   end
 
   def create
-    @user = User.new(params.require(:user).permit(:email, :password))
+    @user = User.new(params.require(:user).permit(:email, :password, :password_confirmation))
 
     if @user.save
       warden.set_user(@user)
+      UserMailer.registration_confirmation(@user).deliver_now
       redirect_to root_url, notice: 'Account created'
     else
       render :new
