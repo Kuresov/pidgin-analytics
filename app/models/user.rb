@@ -1,5 +1,6 @@
 class User < ActiveRecord::Base
   attr_accessor :password
+  has_many :registered_applications
   before_save :encrypt_password
 
   validates :email, presence: true, uniqueness: true,

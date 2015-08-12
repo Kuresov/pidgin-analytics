@@ -7,7 +7,7 @@
         %h4 There is a problem with the information you submitted.
         %ul
           - @user.errors.full_messages.each do |msg|
-            %li #{msg}
+            %li= msg
     = form_group_tag(@user.errors[:email]) do
       = f.label :email
       = f.email_field :email, class:'form-control', placeholder: 'Email'

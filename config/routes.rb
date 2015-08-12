@@ -7,6 +7,8 @@ Rails.application.routes.draw do
   get 'sign_up', to: 'users#new', as: 'sign_up'
   resources :users
 
+  resources :registered_applications
+
   get 'welcome/about'
   root to: 'welcome#index'
 end

@@ -28,6 +28,7 @@
                 #{current_user.email}
                 %span.caret
               %ul.dropdown-menu
+                %li= link_to "Applications", registered_applications_url
                 %li= link_to "Sign Out", sign_out_url
           - else
             %li= link_to "Sign In", sign_in_url
@@ -42,3 +43,9 @@
 
   .container
     = yield
+
+:javascript
+  $(document).on("ready page:change", function() {
+  $("[data-toggle='dropdown']")
+    .dropdown();
+  })

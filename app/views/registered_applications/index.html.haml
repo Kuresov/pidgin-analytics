@@ -1,0 +1,21 @@
+.col-md-3
+
+.col-md-6
+  %h1.text-center Registered Applications
+  %table.table.table-hover
+    %thead
+      %tr
+        %th
+          %h4 Name
+        %th
+          %h4 URL
+    %tbody
+      - @applications.each do |application|
+        %tr
+          %td= link_to "#{application.name}", application
+          %td= application.url
+      %th
+        %td
+          %h4= link_to "New Application", new_registered_application_url
+
+.col-md-3
