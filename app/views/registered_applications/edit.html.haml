@@ -1,2 +1,23 @@
-<h1>RegisteredApplications#edit</h1>
-<p>Find me in app/views/registered_applications/edit.html.erb</p>
+.col-md-3
+
+.col-md-6
+  %h1.text-center Edit Application
+  = form_for @application do |f|
+    - if @application.errors.any?
+      .alert.alert-danger
+        %h4 There is a problem with the information you submitted
+        %ul
+          - @application.errors.full_messages do |msg|
+            %li= msg
+    = form_group_tag(@application.errors[:name]) do
+      = f.label :application_name
+      = f.text_field :name, class:'form-control', placeholder: "#{@application.name}"
+
+    = form_group_tag(@application.errors[:url]) do
+      = f.label :application_url
+      = f.text_field :url, class:'form-control', placeholder: "#{@application.url}"
+
+    .actions
+      = f.submit "Submit"
+
+.col-md-3

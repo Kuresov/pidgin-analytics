@@ -9,13 +9,19 @@
           %h4 Name
         %th
           %h4 URL
+        %th
     %tbody
       - @applications.each do |application|
         %tr
           %td= link_to "#{application.name}", application
           %td= application.url
+          %td
+            = link_to "Edit", edit_registered_application_path(application.id)
+            |
+            = link_to "Destroy", application, method: :delete
       %th
         %td
           %h4= link_to "New Application", new_registered_application_url
+        %td
 
 .col-md-3

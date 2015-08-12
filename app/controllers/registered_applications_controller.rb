@@ -33,7 +33,7 @@ class RegisteredApplicationsController < ApplicationController
 
       if @application.update_attributes(registered_application_params)
         flash[:notice] = "#{@application.name} updated"
-        redirect_to @application
+        redirect_to action: 'index'
       else
         flash.now[:error] = "The application could not be updated. Please try again."
         render :edit
@@ -46,7 +46,7 @@ class RegisteredApplicationsController < ApplicationController
 
     if @application.destroy
       flash[:notice] = "Application '#{@application.name}' deleted"
-      redirect_to root_url
+      redirect_to action: 'index'
     else
       flash.now[:error] = "The application could not be deleted. Please try again"
       render :show
