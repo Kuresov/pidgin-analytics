@@ -4,7 +4,7 @@
   %title Pidgin
   %meta{ name: 'viewport', content: 'width=device-width, initial-scale=1' }
   = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true
-  = javascript_include_tag 'application', 'data-turbolinks-track' => true
+  = javascript_include_tag 'application', 'data-turbolinks-eval' => false
   = csrf_meta_tags
 
 %body
@@ -43,9 +43,3 @@
 
   .container
     = yield
-
-:javascript
-  $(document).on("ready page:change", function() {
-  $("[data-toggle='dropdown']")
-    .dropdown();
-  })
