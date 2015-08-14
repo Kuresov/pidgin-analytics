@@ -1,5 +1,6 @@
 class RegisteredApplication < ActiveRecord::Base
-  has_one :user
+  belongs_to :user
+  has_many :events
 
   validates :name, presence: true, length: { minimum: 5 }
 end
