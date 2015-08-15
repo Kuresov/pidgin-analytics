@@ -4,7 +4,7 @@ class UsersController < ApplicationController
   end
 
   def create
-    @user = User.new(params.require(:user).permit(:email, :password, :password_confirmation))
+    @user = User.new(user_params)
 
     if @user.save
       warden.set_user(@user)
@@ -13,5 +13,26 @@ class UsersController < ApplicationController
     else
       render :new
     end
+  end
+
+  def edit
+    @user = User.find(current_user)
+  end
+
+    def update
+      @user = User.find(current_user)
+
+      if @user.update_attributes(user_params)
+        redirect_to account_path, notice: "#{@user.email} preferences saved!"
+      else
+        flash.now[:error] = "There was a problem saving your preferences."
+        render :edit
+      end
+    end
+
+  private
+
+  def user_params
+    params.require(:user).permit(:email, :password, :password_confirmation, :current_password)
   end
 end
