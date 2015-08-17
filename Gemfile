@@ -13,6 +13,8 @@ group :development do
   gem 'pry-rails'
 end
 
+gem 'chartkick'
+gem 'dateslices'
 gem 'warden'
 gem 'bcrypt'
 gem 'sass-rails', '~> 5.0'

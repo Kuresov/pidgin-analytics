@@ -1,8 +1,14 @@
+- content_for(:header) do
+  = javascript_include_tag '//www.google.com/jsapi', 'chartkick'
+
 .col-md-3
 
 .col-md-6
   %h1.text-center= @application.name
   %h4.text-center= @application.url
+  %div
+    = line_chart @application.events.group_by_day, id: 'application-chart', min: (@event_count / 10).round, max: (@event_count + 10), discrete: true
+  .clearfix
   %table.table
     %thead
       %tr
