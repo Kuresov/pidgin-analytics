@@ -13,5 +13,24 @@
         %tr
           %td= key
           %td= val.count
+  %h4.text-center Your client side tracking code:
+  %p
+    %pre
+      :preserve
+        var pidgin = {
+          report: function(eventName){
+            var event = { name: eventName }
+            var request = new XMLHttpRequest();
 
+            request.open("POST", "http://localhost:3000/api", true);
+            request.setRequestHeader('Content-Type', 'application/json');
+            request.send(JSON.stringify(event));
+
+            request.onreadystatechange = function() {
+              console.log("In the mix")
+            };
+          }
+        };
+
+        pidgin.report("Visit");
 .col-md-3
