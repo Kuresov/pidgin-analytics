@@ -1,5 +1,5 @@
 - content_for(:header) do
-  = javascript_include_tag '//www.google.com/jsapi', 'chartkick'
+  = javascript_include_tag 'Chart'
 
 .col-md-3
 
@@ -7,8 +7,7 @@
   %h1.text-center= @application.name
   %h4.text-center= @application.url
   %div
-    = line_chart @application.events.group_by_day, id: 'application-line', min: (@event_count / 10).round, max: (@event_count + 10), discrete: true
-    = pie_chart @application.events.group(:name).count, id: 'application-pie'
+    %canvas#chart{ width: 470, height: 300 }
   .clearfix
   %table.table
     %thead
@@ -20,5 +19,16 @@
         %tr
           %td= key
           %td= val.count
+  .clearfix
+    %div#legend
 
 .col-md-3
+
+:javascript
+  var ctx = document.getElementById("chart").getContext("2d");
+  var data = {
+    labels: #{@days.map { |day| day.to_date.strftime("%A") }},
+    datasets: #{ render partial: 'chartdata.js.erb', locals: { data: @data } }
+  };
+
+  var newChart = new Chart(ctx).Line(data);

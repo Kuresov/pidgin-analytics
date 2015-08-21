@@ -1,0 +1,15 @@
+<% colors = [151, 187, 205] %>
+[
+  <% @data.each do |name, date| %>
+    {
+      label: "<%= name %>",
+      fillColor: "rgba( <%= colors.map! { |color| color - 20 }.join(",") %>, 0.2)",
+      strokeColor: "rgba(151,187,205,1)",
+      pointColor: "rgba(<%= colors.join(",") %>, 1)",
+      pointStrokeColor: "#fff",
+      pointHighlightFill: "#fff",
+      pointHighlightStroke: "rgba(220,220,220,1)",
+      data: <%= @data[name].values %>
+    },
+  <% end %>
+]

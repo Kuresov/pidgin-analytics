@@ -24,7 +24,35 @@ class RegisteredApplicationsController < ApplicationController
     @application = RegisteredApplication.find(params[:id])
     @events = @application.events.group_by(&:name)
     @event_count = @application.events.count
+
+    # Get events by date and name for charting
+    #@events_by_date = Event.where(registered_application_id: params[:id]).group_by { |event| [event.created_at.to_date.to_s(:db), event.name] }
+
+    @events_by_name = Event.where(registered_application_id: params[:id]).order(:name).group_by { |event| event.name }
+
+    # Get 7 previous days for charting
+    @days = []
+    7.times do |i|
+      @days << (Date.today - i)
+    end
+    @days.sort!
+
+    @data = {}
+    @events_by_name.each do |name, events|
+      @data[name] = {}
+
+      @days.each do |day|
+        @data[name][day] = 0
+
+        events.each do |event|
+          if event.created_at.to_date == day
+            @data[name][day] += 1
+          end
+        end
+      end
+    end
   end
+
 
   def edit
     @application = RegisteredApplication.find(params[:id])
