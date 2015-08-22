@@ -1,11 +1,22 @@
 class API::EventsController < ApplicationController
   skip_before_action :verify_authenticity_token
-  before_filter :set_access_control_headers
+  before_action :cors_preflight_check
+  after_action :cors_set_access_control_headers
 
-  def set_access_control_headers
+  def cors_preflight_check
+    if request.method == 'OPTIONS'
+      headers['Access-Control-Allow-Origin'] = '*'
+      headers['Access-Control-Allow-Methods'] = 'POST, GET, OPTIONS'
+      headers['Access-Control-Allow-Headers'] = 'content-type'
+
+      render json: '', content_type: 'text-plain'
+    end
+  end
+
+  def cors_set_access_control_headers
     headers['Access-Control-Allow-Origin'] = '*'
     headers['Access-Control-Allow-Methods'] = 'POST, GET, OPTIONS'
-    headers['Access-Control-Allow-Headers'] = 'Content-Type'
+    headers['Access-Control-Allow-Headers'] = 'content-type'
   end
 
   def create

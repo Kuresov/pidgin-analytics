@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
 
   namespace :api, defaults: { format: :json } do
-    match '/', to: 'events#create', via: [:options]
+    match '/', to: 'events#create', via: [:post, :options]
   end
 
   get 'sign_in', to: 'sessions#new', as: 'sign_in'
