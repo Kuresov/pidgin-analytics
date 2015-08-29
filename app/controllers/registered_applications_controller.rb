@@ -25,17 +25,36 @@ class RegisteredApplicationsController < ApplicationController
     @events = @application.events.group_by(&:name)
     @event_count = @application.events.count
 
-    # Get events by date and name for charting
-    #@events_by_date = Event.where(registered_application_id: params[:id]).group_by { |event| [event.created_at.to_date.to_s(:db), event.name] }
-
     @events_by_name = Event.where(registered_application_id: params[:id]).order(:name).group_by { |event| event.name }
 
-    # Get 7 previous days for charting
+    #Get events associated with application from params
+    #---group by name
+    #------group by date
+
+    #@sql = Event.where(registered_application_id: params[:id]).group_by { |event| [event.name, event.created_at.to_date] }
+    #@sql = Event.where(registered_application_id: params[:id]).group(:name).group_by { |event| event.created_at.to_date }
+
+    @sql = Event.where(registered_application_id: params[:id])
+                .group("date(created_at)")
+                .group(:name).count
+
+    #SELECT name, COUNT(id), created_at FROM events WHERE registered_application_id = 13 GROUP BY name, created_at;
+
+    # Get last 7 days for charting
     @days = []
-    7.times do |i|
-      @days << (Date.today - i)
+    0.upto(6) { |i| @days << [Date.today - i] }
+    
+    @data2 = []
+   
+    @days.each do |day|
+      @sql.each do |item|
+        if item[0][0]== day
+          @data2 << item[1]
+        else
+          @data2 << [item[0][0]]
+        end
+      end
     end
-    @days.sort!
 
     @data = {}
     @events_by_name.each do |name, events|

@@ -21,6 +21,8 @@
           %td= val.count
   .clearfix
     %div#legend
+  .clearfix
+    = render partial: 'chartdata.js.erb', locals: {data: @data, sql: @sql}
 
 .col-md-3
 
